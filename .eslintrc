@@ -5,5 +5,7 @@
   "env": {
     "node": true // Enabling Node.js global variables
   },
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "off"
+  }
 }
