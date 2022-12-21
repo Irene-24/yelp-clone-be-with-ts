@@ -1,5 +1,5 @@
 import { Router } from "express";
-import restaurants from "./restaurants";
+import restaurants from "./restaurants.route";
 
 export default () => {
   const app = Router();

@@ -1,23 +1,29 @@
 import pg, { Pool, PoolConfig, QueryConfig } from "pg";
 
 class AppPool {
-  #pool: Pool | null = null;
+  protected pool: Pool | null = null;
 
-  connect(options?: PoolConfig) {
-    this.#pool = new pg.Pool(options);
+  connect(options?: PoolConfig): Promise<any> {
+    try {
+      this.pool = new pg.Pool(options);
+
+      return Promise.resolve();
+    } catch (error) {
+      return Promise.reject();
+    }
   }
 
   close() {
-    if (this.#pool) {
-      return this.#pool.end();
+    if (this.pool) {
+      return this.pool.end();
     } else {
       this.error();
     }
   }
 
-  query(sql: string | QueryConfig, params: any) {
-    if (this.#pool) {
-      return this.#pool.query(sql, params);
+  query(sql: string | QueryConfig, params?: any) {
+    if (this.pool) {
+      return this.pool.query(sql, params);
     } else {
       this.error();
     }

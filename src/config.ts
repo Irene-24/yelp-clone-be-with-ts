@@ -7,8 +7,13 @@ process.env.NODE_ENV = process.env.NODE_ENV || "development";
 //else it will make it dev
 console.log({ env: process.env.NODE_ENV });
 
+const path =
+  process.env.NODE_ENV === "production"
+    ? __dirname + `/../.env`
+    : __dirname + `/../.env.${process.env.NODE_ENV}`;
+
 const envFound = dotenv.config({
-  path: __dirname + `/../.env.${process.env.NODE_ENV}`,
+  path,
 }); // change according to your need
 
 if (envFound.error) {
@@ -16,8 +21,17 @@ if (envFound.error) {
 }
 
 export default {
+  env: process.env.NODE_ENV,
+  isDev: process.env.NODE_ENV === "development",
   port: parseInt(process.env.PORT as string, 10),
-  dbConfig: {},
+  pageSize: parseInt(process.env.LIMIT as string, 10),
+  dbConfig: {
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT as string, 10),
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USER,
+    password: process.env.DB_PWD,
+  },
   jwtConfig: {},
   emailConfig: {},
 };
