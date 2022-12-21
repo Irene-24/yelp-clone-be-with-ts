@@ -8,8 +8,6 @@ const { dbConfig } = config;
 export default async ({ expressApp }: { expressApp: Application }) => {
   //connect db
 
-  console.log(dbConfig);
-
   pool
     .connect(dbConfig)
     .then(() => {

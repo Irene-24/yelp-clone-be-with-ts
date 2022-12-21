@@ -1,12 +1,16 @@
 import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
-import routes from "@routes/index";
-import config from "@src/config";
-import { ApiError, NotFoundError } from "@src/utils/APIError";
+import morgan from "morgan";
 import { serializeError } from "serialize-error";
 import omit from "lodash/omit";
 
+import routes from "@routes/index";
+import config from "@src/config";
+import { ApiError, NotFoundError } from "@src/utils/APIError";
+
 export default ({ app }: { app: express.Application }) => {
+  app.use(morgan("tiny"));
+
   app.get(["/", "/test", "/status"], async (req, res) => {
     res.json({ message: `Server [${config.env}] is online!` });
   });
